@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function ListItem({number, index, deleteItem}) {
   return (
@@ -32,6 +32,7 @@ function AddNumber({inputNumber, handleChange, handleSubmit}) {
 function Adder() {
   const [numbers, setNumbers] = useState([]);
   const [inputNumber, setInputNumber] = useState('');
+  const [sum, setSum] = useState('0');
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -55,9 +56,9 @@ function Adder() {
     setNumbers([...newNumbers]);
   }
 
-  function sumNumbers(numbers) {
-    return numbers.reduce((sum, currentValue) => sum + currentValue, 0);
-  }
+  useEffect(() => {
+    setSum(numbers.reduce((sum, currentValue) => sum + currentValue, 0));
+  }, [numbers]);
 
   return (
     <div className='adder'>
@@ -77,7 +78,7 @@ function Adder() {
         })}
       </div>
       <div className='sum'>
-        Sum: {sumNumbers(numbers)}
+        Sum: {sum}
       </div>
     </div>
   )
